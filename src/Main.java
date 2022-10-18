@@ -2,6 +2,11 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+        someShapes.Rectangle<someShapes.Shape> rectangle1 = new someShapes.Rectangle<>(new someShapes.Shape(5, 10));
+        someShapes.Rectangle<someShapes.Shape> rectangle2 = new someShapes.Rectangle<>(new someShapes.Shape(5, 10));
+        System.out.println(rectangle1.equalArea(rectangle2.getShape()));
+
         System.out.println("Try entering a number on name and a string on age and see what happens!");
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter animal name: ");
