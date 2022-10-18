@@ -1,51 +1,40 @@
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Main {
+
     public static void main(String[] args) {
+        int[] weight = {1, 2, 3, 4, 5};
+        int[] height = {5, 4, 3, 2, 1};
+        String[] name = {"a", "b", "c", "d", "e"};
+        ArrayList<Animal> animals = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            animals.add(new Animal(weight[i], height[i], name[i]));
+        }
 
-        someShapes.Rectangle<someShapes.Shape> rectangle1 = new someShapes.Rectangle<>(new someShapes.Shape(5, 10));
-        someShapes.Rectangle<someShapes.Shape> rectangle2 = new someShapes.Rectangle<>(new someShapes.Shape(5, 10));
-        System.out.println(rectangle1.equalArea(rectangle2.getShape()));
-
-        System.out.println("Try entering a number on name and a string on age and see what happens!");
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter animal name: ");
-        String name = scanner.next();
-        System.out.println("Enter animal weight: (try out all types)");
-        int weight = scanner.nextInt();
-
-        try {
-            Animal animal = new Animal(name, 12, weight);
-
-            System.out.println(animal.getName());
-            System.out.println(animal.getAge());
-            System.out.println(animal.getWeight());
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+        Collections.sort(animals);
+        for (Animal animal : animals) {
+            System.out.println(animal.weight + " " + animal.age + " " + animal.name);
         }
     }
 }
 
-class Animal<T extends Number, V extends String> {
-    private final V name;
-    private final int age;
-    private final T weight; // generic type - to account for floats, doubles, etc.
+class Animal implements Comparable<Animal> {
+    int age;
+    String name;
+    int weight;
 
-    public Animal(V name, int age, T weight) {
-        this.name = name;
-        this.age = age;
+    public Animal(int weight, int height, String name) {
         this.weight = weight;
+        this.age = height;
+        this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public T getWeight() {
-        return weight;
+    @Override
+    public int compareTo(Animal o) {
+        if (o.age > this.age) return -1;
+        else if (o.age < this.age) return 1;
+        else return 0;
     }
 }
