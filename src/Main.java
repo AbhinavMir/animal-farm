@@ -38,30 +38,35 @@ public class Main {
         };
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter 1 to sort by weight, 2 to sort by age");
-        int choice = scanner.nextInt();
-        if (choice == 1) {
-            Collections.sort(animals, comparator1);
-        } else if (choice == 2) {
-            Collections.sort(animals, comparator2);
-        } else {
-            System.out.println("Wrong choice");
-        }
+        System.out.println("Enter 1 to sort by weight, 2 to sort by age, 0 to exit");
 
-        for (Animal animal : animals) {
-            System.out.println(animal.weight + " " + animal.age + " " + animal.name);
+        while (true) {
+            int choice = scanner.nextInt();
+            if (choice == 1) {
+                Collections.sort(animals, comparator1);
+            } else if (choice == 2) {
+                Collections.sort(animals, comparator2);
+            } else if (choice == 0) {
+                break;
+            } else {
+                System.out.println("Wrong input");
+
+            }
+
+            for (Animal animal : animals) {
+                System.out.println(animal.weight + " " + animal.age + " " + animal.name);
+            }
+        }
+    }}
+
+    class Animal {
+        int age;
+        String name;
+        int weight;
+
+        public Animal(int weight, int age, String name) {
+            this.weight = weight;
+            this.age = age;
+            this.name = name;
         }
     }
-}
-
-class Animal {
-    int age;
-    String name;
-    int weight;
-
-    public Animal(int weight, int age, String name) {
-        this.weight = weight;
-        this.age = age;
-        this.name = name;
-    }
-}
