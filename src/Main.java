@@ -3,63 +3,34 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        int[] weight = {1, 2, 3, 4, 5};
-        int[] age = {5, 4, 3, 2, 1};
-        String[] name = {"a", "b", "c", "d", "e"};
+        int[] weight = {1, 2, 3, 4, 5, 10};
+        int[] age = {5, 4, 3, 2, 1, 10};
+        String[] name = {"a", "b", "c", "d", "e", "f"};
         ArrayList<Animal> animals = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             animals.add(new Animal(weight[i], age[i], name[i]));
         }
 
-        Comparator<Animal> comparator1 = new Comparator<Animal>() {
-            @Override
-            public int compare(Animal o1, Animal o2) {
-                if (o1.weight > o2.weight) {
-                    return 1;
-                } else if (o1.weight < o2.weight) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            }
-        };
+        Iterable<Animal> iterable = animals;
 
-        Comparator<Animal> comparator2 = new Comparator<Animal>() {
-            @Override
-            public int compare(Animal o1, Animal o2) {
-                if (o1.age > o2.age) {
-                    return 1;
-                } else if (o1.age < o2.age) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            }
-        };
-
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter 1 to sort by weight, 2 to sort by age, 0 to exit");
-
-        while (true) {
-            int choice = scanner.nextInt();
-            if (choice == 1) {
-                Collections.sort(animals, comparator1);
-            } else if (choice == 2) {
-                Collections.sort(animals, comparator2);
-            } else if (choice == 0) {
-                break;
-            } else {
-                System.out.println("Wrong input");
-
-            }
-
-            for (Animal animal : animals) {
-                System.out.println(animal.weight + " " + animal.age + " " + animal.name);
-            }
+        for (Animal animal : iterable) {
+            System.out.println(animal.name);
         }
-    }}
 
-    class Animal {
+        Iterator<Animal> iterator = iterable.iterator();
+
+        int SUM_OF_WEIGHT = 0;
+
+        while (iterator.hasNext()) {
+            Animal animal = iterator.next();
+            SUM_OF_WEIGHT += animal.getWeight();
+        }
+
+        double average = (double) SUM_OF_WEIGHT / animals.size();
+        System.out.println(average);
+    }
+
+    static class Animal {
         int age;
         String name;
         int weight;
@@ -69,4 +40,9 @@ public class Main {
             this.age = age;
             this.name = name;
         }
+
+        public int getWeight() {
+            return weight;
+        }
     }
+}
