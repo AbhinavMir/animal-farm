@@ -1,48 +1,117 @@
 import java.util.*;
+import java.util.Iterator;
 
 public class Main {
-
     public static void main(String[] args) {
-        int[] weight = {1, 2, 3, 4, 5, 10};
-        int[] age = {5, 4, 3, 2, 1, 10};
-        String[] name = {"a", "b", "c", "d", "e", "f"};
-        ArrayList<Animal> animals = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            animals.add(new Animal(weight[i], age[i], name[i]));
-        }
+        Skrt<Animal> animals = new Skrt<>();
+        animals.add(new Animal(1, "A"));
+        animals.add(new Animal(235, "B"));
 
-        Iterable<Animal> iterable = animals;
-
-        for (Animal animal : iterable) {
-            System.out.println(animal.name);
-        }
-
-        Iterator<Animal> iterator = iterable.iterator();
-
-        int SUM_OF_WEIGHT = 0;
-
+        Iterator<Animal> iterator = animals.iterator();
         while (iterator.hasNext()) {
             Animal animal = iterator.next();
-            SUM_OF_WEIGHT += animal.getWeight();
+            System.out.println(animal);
         }
-
-        double average = (double) SUM_OF_WEIGHT / animals.size();
-        System.out.println(average);
     }
 
-    static class Animal {
-        int age;
-        String name;
+    static class Animal
+    {
         int weight;
+        String name;
 
-        public Animal(int weight, int age, String name) {
-            this.weight = weight;
-            this.age = age;
-            this.name = name;
+        public String getName()
+        {
+            return this.name;
         }
 
-        public int getWeight() {
-            return weight;
+        public Animal(int w, String n)
+        {
+            this.weight = w;
+            this.name = n;
+        }
+    }
+
+    // Custom Linked Skrt class using Generics
+    static class Skrt<T> implements Iterable<T> {
+        Node<T> head, tail; // Node class with a bunch of methods and variables
+
+        // add new Element at tail of the linked list in O(1)
+        public void add(T data) {
+            Node<T> node = new Node<>(data, null);
+            if (head == null) tail = head = node;
+            else {
+                tail.setNext(node);
+                tail = node;
+            }
+        }
+
+        // return Head
+        public Node<T> getHead() {
+            return head; // current Node
+        }
+
+        // return Tail
+        public Node<T> getTail() {
+            return tail;
+        }
+
+        // return Iterator instance
+        public Iterator<T> iterator() {
+            return new ListIterator<T>(this);
+        }
+    }
+
+    static class ListIterator<T> implements Iterator<T> {
+        Node<T> current;
+
+        // initialize pointer to head of the list for iteration
+        public ListIterator(Skrt<T> list) {
+            current = list.getHead();
+        }
+
+        // returns false if next element does not exist
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        // return current data and update pointer
+        public T next() {
+            T data = current.getData();
+            current = current.getNext();
+            return data;
+        }
+
+        // implement if needed
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    // Constituent Node of Linked Skrt
+    static class Node<T> {
+        T data;
+        Node<T> next;
+
+        public Node(T data, Node<T> next) {
+            this.data = data;
+            this.next = next;
+        }
+
+        public T getData() {
+            return data;
+        }
+
+        // Setter getter methods for Data and Next Pointer
+        public void setData(T data) {
+            this.data = data;
+        }
+
+        public Node<T> getNext() {
+            return next;
+        }
+
+        public void setNext(Node<T> next) {
+            this.next = next;
         }
     }
 }
